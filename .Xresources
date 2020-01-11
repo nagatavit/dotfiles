@@ -1,0 +1,25 @@
+! Dracula color scheme
+URxvt.foreground: #F8F8F2
+URxvt.background: #282A36
+URxvt.color0:     #262626
+URxvt.color1:     #E356A7
+URxvt.color2:     #42E66C
+URxvt.color3:     #E4F34A
+URxvt.color4:     #9B6BDF
+URxvt.color5:     #E64747
+URxvt.color6:     #75D7EC
+URxvt.color7:     #EFA554
+URxvt.color8:     #7A7A7A
+URxvt.color9:     #FF79C6
+URxvt.color10:    #50FA7B
+URxvt.color11:    #F1FA8C
+URxvt.color12:    #BD93F9
+URxvt.color13:    #FF5555
+URxvt.color14:    #8BE9FD
+URxvt.color15:    #FFB86C
+
+URxvt.intensityStyles:	false
+URxvt.depth:		32
+URxvt.font: 		xft:FiraCode:size=11
+URxvt.scrollBar:	false
+URxvt.cursorColor:	white
