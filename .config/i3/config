@@ -18,7 +18,7 @@ font pango:System San Franciso Display 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec urxvt
 bindsym $mod+KP_Enter exec gnome-terminal
 
 # kill focused window
@@ -233,7 +233,7 @@ for_window [class="Pavucontrol"] resize set 1200 700
 for_window [class="KeePassXC"] floating enable
 for_window [class="KeePassXC"] resize set 1200 700
 for_window [class="KeePassXC"] move scratchpad
-bindsym $mod+y [class="Keepassx"] scratchpad show; [class="Keepassx"] move position center
+bindsym $mod+y [class="KeePassXC"] scratchpad show; [class="KeePassXC"] move position center
 
 ################################
 #### Dropdown and scrachpad ####
