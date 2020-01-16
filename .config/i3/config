@@ -219,6 +219,10 @@ exec firefox
 exec emacs
 exec thunderbird
 
+exec --no-startup-id keepassxc
+exec --no-startup-id emacs -name "scratchpad"
+exec --no-startup-id urxvt -name "dropdown"
+
 ###############################
 #### Window configurations ####
 ###############################
@@ -234,6 +238,18 @@ for_window [class="KeePassXC"] floating enable
 for_window [class="KeePassXC"] resize set 1200 700
 for_window [class="KeePassXC"] move scratchpad
 bindsym $mod+y [class="KeePassXC"] scratchpad show; [class="KeePassXC"] move position center
+
+for_window [instance="scratchpad"] floating enable
+for_window [instance="scratchpad"] resize set 1200 700
+for_window [instance="scratchpad"] move scratchpad
+bindsym $mod+u [instance="scratchpad"] scratchpad show; [instance="scratchpad"] move position center
+
+for_window [instance="dropdown"] floating enable
+for_window [instance="dropdown"] resize set 1200 700
+for_window [instance="dropdown"] move scratchpad
+
+exec --no-startup-id urxvt -name "dropdown"
+bindsym $mod+o 		[instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 
 ################################
 #### Dropdown and scrachpad ####
