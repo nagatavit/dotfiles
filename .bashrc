@@ -40,3 +40,5 @@ alias l='ls -CF'
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+export PATH=$PATH:$HOME/Scripts
