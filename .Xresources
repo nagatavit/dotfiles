@@ -25,7 +25,7 @@ URxvt.scrollBar:	false
 URxvt.cursorColor:	white
 
 !! Extensions
-URxvt.perl-ext-common:  default,matcher,resize-font,url-select,keyboard-select,clipboard,fullscreen
+URxvt.perl-ext-common:  default,matcher,resize-font,url-select,keyboard-select,tabbedex,fullscreen
 URxvt.colorUL:              #4682B4
 !! Fullscreen
 URxvt.keysym.F11: perl:fullscreen:switch
