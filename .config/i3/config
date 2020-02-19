@@ -223,6 +223,8 @@ exec --no-startup-id keepassxc
 exec --no-startup-id emacs -name "scratchpad"
 exec --no-startup-id urxvt -name "dropdown"
 
+exec_always xmodmap ~/.Xmodmap
+
 ###############################
 #### Window configurations ####
 ###############################
