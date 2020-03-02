@@ -211,7 +211,6 @@ assign [class="Thunderbird"] $ws10
 
 exec compton
 exec xrandr --output eDP-1 --primary --mode 1366x768 --pos 1920x0 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal
-exec xset r rate 200 50
 exec_always ~/.config/polybar/launch.sh
 exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpaper/arch_sunset.jpg
 
@@ -224,6 +223,9 @@ exec --no-startup-id emacs -name "scratchpad"
 exec --no-startup-id urxvt -name "dropdown"
 
 exec_always xmodmap ~/.Xmodmap
+exec_always xset r rate 200 70
+exec kdeconnect-indicator
+exec --no-startup-id dunst > /dev/null 2>&1 &
 
 ###############################
 #### Window configurations ####
@@ -249,13 +251,7 @@ bindsym $mod+u [instance="scratchpad"] scratchpad show; [instance="scratchpad"] 
 for_window [instance="dropdown"] floating enable
 for_window [instance="dropdown"] resize set 1200 700
 for_window [instance="dropdown"] move scratchpad
-
-exec --no-startup-id urxvt -name "dropdown"
-bindsym $mod+o 		[instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
-
-################################
-#### Dropdown and scrachpad ####
-################################
+bindsym $mod+o [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 
 ############################
 #### Custom keybindings ####
