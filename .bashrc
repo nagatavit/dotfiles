@@ -57,3 +57,14 @@ if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
 # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
 if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
 
+export NNN_TMPFILE="/tmp/nnn"
+
+n()
+{
+    nnn "$@"
+
+    if [ -f $NNN_TMPFILE ]; then
+        . $NNN_TMPFILE
+        rm $NNN_TMPFILE
+    fi
+}
