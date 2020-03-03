@@ -260,6 +260,8 @@ bindsym $mod+o [instance="dropdown"] scratchpad show; [instance="dropdown"] move
 bindsym $mod+n exec dolphin
 bindsym $mod+c exec gsimplecal
 bindsym $mod+p move workspace to output right
+bindsym Print exec scrot ~/Pictures/Screenshots/%Y-%m-%d_%H:%M:%S.png
+bindsym --release $mod+Print exec scrot -s ~/Pictures/Screenshots/%Y-%m-%d_%H:%M:%S.png
 
 bindsym $mod+Shift+b border pixel 3
 bindsym $mod+b border normal
