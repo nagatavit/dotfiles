@@ -20,7 +20,7 @@ URxvt.color15:    #FFB86C
 
 URxvt.intensityStyles:	false
 URxvt.depth:		32
-URxvt.font: 		xft:FiraCode:size=11
+URxvt.font: 		xft:FiraCode:size=11, xft:MesloLGS NF:size=11:style=Bold, xft:PowerlineSymbols
 URxvt.scrollBar:	false
 URxvt.cursorColor:	white
 
