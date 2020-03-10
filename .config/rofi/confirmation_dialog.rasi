@@ -1,0 +1,32 @@
+configuration {
+    theme:              "config";
+    show-icons:         false;
+    font:               "Font Awesome 30";
+}
+
+mainbox {
+    children:           [message, listview];
+    padding:            20% 10%;
+}
+
+textbox {
+    horizontal-align:   0.5;
+    border:             0px 0px 2px;
+    border-color:       @primary;
+    margin:             12px;
+    padding:            12px;
+}
+
+listview {
+    layout:             vertical;
+    columns:            2;
+    spacing:            5px;
+    lines:              1;
+    fixed-height:       1;
+    dynamic:            false;
+}
+
+element-text {
+    horizontal-align:   0.5;
+    font:               "Fira Coda 10";
+}

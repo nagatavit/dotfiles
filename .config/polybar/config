@@ -436,7 +436,7 @@ content-foreground = ${colors.green}
 content-padding    = 1
 
 ; Mouse click
-click-left = poweroff
+click-left = ~/.config/polybar/scripts/rofi_confirm
 
 [module/firefox]
 type = custom/text
