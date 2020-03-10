@@ -241,7 +241,7 @@ for_window [class="Pavucontrol"] resize set 1200 700
 for_window [class="KeePassXC"] floating enable
 for_window [class="KeePassXC"] resize set 1200 700
 for_window [class="KeePassXC"] move scratchpad
-bindsym $mod+y [class="KeePassXC"] scratchpad show; [class="KeePassXC"] move position center
+bindsym $mod+i [class="KeePassXC"] scratchpad show; [class="KeePassXC"] move position center
 
 for_window [instance="scratchpad"] floating enable
 for_window [instance="scratchpad"] resize set 1200 700
