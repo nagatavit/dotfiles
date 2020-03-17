@@ -425,7 +425,7 @@ content-foreground = ${colors.green}
 content-padding    = 1
 
 ; Mouse click
-click-left = ~/.config/polybar/scripts/rofi_restart
+click-left = ~/.config/polybar/scripts/rofi_restart.sh
 
 [module/poweroff]
 type = custom/text
@@ -437,7 +437,7 @@ content-foreground = ${colors.green}
 content-padding    = 1
 
 ; Mouse click
-click-left = ~/.config/polybar/scripts/rofi_poweroff
+click-left = ~/.config/polybar/scripts/rofi_poweroff.sh
 
 [module/firefox]
 type = custom/text
