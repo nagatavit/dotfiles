@@ -22,7 +22,7 @@ window {
 
 mainbox {
     children:                       [ entry, listview, message ];
-    padding:                        20% 10%;
+    padding:                        30% 10%;
 }
 
 entry {

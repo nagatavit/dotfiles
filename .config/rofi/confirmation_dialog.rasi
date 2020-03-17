@@ -6,7 +6,7 @@ configuration {
 
 mainbox {
     children:           [message, listview];
-    padding:            20% 10%;
+    padding:            30% 37%;
 }
 
 textbox {
@@ -18,10 +18,10 @@ textbox {
 }
 
 listview {
-    layout:             vertical;
+    layout:             horizontal;
     columns:            2;
     spacing:            5px;
-    lines:              1;
+    lines:              2;
     fixed-height:       1;
     dynamic:            false;
 }
