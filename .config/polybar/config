@@ -10,7 +10,7 @@ red        = #ed2e38
 monitor = ${env:MONITOR:HDMI-1}
 ; Size
 width  = 100%
-height = 20
+height = 16
 
 ; Offset
 ;offset-x = 50%
