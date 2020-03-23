@@ -217,6 +217,7 @@ exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpaper/arch_
 exec firefox
 exec emacs
 exec thunderbird
+exec syncthing
 
 exec --no-startup-id keepassxc
 exec --no-startup-id emacs -name "scratchpad"
