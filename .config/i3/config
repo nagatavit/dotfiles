@@ -18,8 +18,8 @@ font pango:System San Franciso Display 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt
-bindsym $mod+KP_Enter exec gnome-terminal
+bindsym $mod+Return exec st
+bindsym $mod+KP_Enter exec st
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -221,7 +221,7 @@ exec syncthing
 
 exec --no-startup-id keepassxc
 exec --no-startup-id emacs -name "scratchpad"
-exec --no-startup-id urxvt -name "dropdown"
+exec --no-startup-id st -n "dropdown"
 
 exec_always xmodmap ~/.Xmodmap
 exec_always xset r rate 200 70
