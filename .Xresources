@@ -1,27 +1,27 @@
 ! Transparency (0-1):
-ST.alpha: 0.9
+St.alpha: 0.9
 
 ! Dracula color scheme
-*.foreground: #F8F8F2
-*.background: #282A36
-*.color0:     #262626
-*.color1:     #E356A7
-*.color2:     #42E66C
-*.color3:     #E4F34A
-*.color4:     #9B6BDF
-*.color5:     #E64747
-*.color6:     #75D7EC
-*.color7:     #EFA554
-*.color8:     #7A7A7A
-*.color9:     #FF79C6
-*.color10:    #50FA7B
-*.color11:    #F1FA8C
-*.color12:    #BD93F9
-*.color13:    #FF5555
-*.color14:    #8BE9FD
-*.color15:    #FFB86C
+St.foreground: #F8F8F2
+St.background: #282A36
+St.color0:     #262626
+St.color1:     #E356A7
+St.color2:     #42E66C
+St.color3:     #E4F35A
+St.color4:     #9B6BDF
+St.color5:     #E64747
+St.color6:     #75D7EC
+St.color7:     #EFA554
+St.color8:     #7A7A7A
+St.color9:     #FF79C6
+St.color10:    #50FA7B
+St.color11:    #F1FA8C
+St.color12:    #BD93F9
+St.color13:    #FF5555
+St.color14:    #8BE9FD
+St.color15:    #FFB86C
 
-*.font: monospace:size=11
+St.font: monospace:size=11
 
 URxvt.intensityStyles:	false
 URxvt.depth:		32
