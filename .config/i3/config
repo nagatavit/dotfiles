@@ -221,6 +221,7 @@ exec syncthing
 
 exec --no-startup-id keepassxc
 exec --no-startup-id emacs -name "scratchpad"
+exec --no-startup-id emacs --daemon
 exec --no-startup-id st -n "dropdown"
 
 exec_always xmodmap ~/.Xmodmap
