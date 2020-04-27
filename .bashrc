@@ -68,3 +68,5 @@ n()
         rm $NNN_TMPFILE
     fi
 }
+
+export PATH=$PATH:$HOME/.bin
