@@ -111,8 +111,10 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-set $left_monitor "eDP-1"
-set $right_monitor "HDMI-1"
+# set $left_monitor "eDP-1"
+# set $right_monitor "HDMI-1"
+set $left_monitor "HDMI-1"
+set $right_monitor "eDP-1"
 
 # use workspaces on different monitors
 workspace $ws1 output $left_monitor
@@ -177,8 +179,8 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # spacing and gaps
-for_window [class="^.*"] border pixel 3
-gaps inner 7
+for_window [class="^.*"] border pixel 5
+gaps inner 10
 
 # Customize colors
 client.focused          #16a085 #16a085 #eeeeee #16a085 #16a085
@@ -212,10 +214,12 @@ assign [class="Thunderbird"] $ws10
 #### Startup applications ####
 ##############################
 
-exec compton
-exec xrandr --output eDP-1 --primary --mode 1366x768 --pos 1920x0 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal
+exec picom
+exec_always xrandr --output eDP-1 --primary --mode 1366x768 --pos 1920x312 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal
+# exec_always xrandr --output eDP-1 --primary --mode 1366x768 --pos 0x312 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 1366x0 --rotate normal
 exec_always ~/.config/polybar/launch.sh
-exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpaper/arch_sunset.jpg
+# exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpaper/rhines_lab.jpg
+exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpaper/exusiai_mostima.jpg
 
 exec firefox
 exec emacs
@@ -224,7 +228,7 @@ exec syncthing
 
 exec --no-startup-id keepassxc
 exec --no-startup-id emacs -name "scratchpad"
-exec --no-startup-id emacs --daemon
+# exec --no-startup-id emacs --daemon
 exec --no-startup-id st -n "dropdown"
 
 exec_always xmodmap ~/.Xmodmap

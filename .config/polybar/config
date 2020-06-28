@@ -249,13 +249,23 @@ type = internal/network
 interface = wlp3s0
 interval = 3.0
 ; udspeed-minwidth = 0
-format-connected = <label-connected>
+; format-connected =<ramp-signal> <label-connected>
+format-connected =<label-connected>
 format-disconnected = <label-disconnected>
 label-connected = " %essid% %local_ip% "
+; label-connected = "%essid% %local_ip% "
 label-connected-foreground = #eefafafa
 label-disconnected = 
 label-disconnected-foreground = #66ffffff
 label-urgent-padding    = 2
+
+; ramp-signal-0 = F
+; ramp-signal-1 = E
+; ramp-signal-2 = D
+; ramp-signal-3 = C
+; ramp-signal-4 = B
+; ramp-signal-5 = A
+
 
 [module/pavolume]
 type = custom/script

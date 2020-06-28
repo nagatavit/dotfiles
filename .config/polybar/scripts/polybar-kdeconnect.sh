@@ -11,7 +11,8 @@ THEME=solarized
 # Color Settings of Icon shown in Polybar
 COLOR_DISCONNECTED='#000'       # Device Disconnected
 COLOR_NEWDEVICE='#00f'          # New Device
-COLOR_BATTERY_90_100='#0f0'     # 90 <= Battery == 100
+COLOR_BATTERY_100='#00f0ff'        # Battery == 100
+COLOR_BATTERY_90_99='#0f0'      # 90 <= Battery < 100
 COLOR_BATTERY_70_80='#78ec6c'   # 70 <= Battery < 90
 COLOR_BATTERY_50_60='#a9f36a'   # 50 <= Battery < 60
 COLOR_BATTERY_30_40='#ddf969'   # 30 <= Battery < 50
@@ -19,8 +20,18 @@ COLOR_BATTERY_20_30='#fefe69'   # 20 <= Battery < 30
 COLOR_BATTERY_LOW='#f00'        # Battery <  20
 
 # Icons shown in Polybar
+# ICON_100=''
+ICON_100=''
+ICON_90=''
+ICON_70=''
+ICON_50=''
+ICON_30=''
+ICON_20=''
+ICON_LOW=''
+ICON_QUESTION=''
+ICON_DISCONECTED=''
+
 ICON_SMARTPHONE=''
-# ICON_TABLET=''
 ICON_TABLET=''
 SEPERATOR=' '
 
@@ -38,7 +49,7 @@ show_devices (){
         if [ "$isreach" = "true" ] && [ "$istrust" = "true" ]
         then
             battery="$(qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$deviceid" org.kde.kdeconnect.device.battery.charge)"
-            icon=$(get_icon "$battery" "$devicetype")
+            icon=$(get_icon "$battery" "$devicename")
             devices+="%{A1:$DIR/polybar-kdeconnect.sh -n '$devicename' -i $deviceid -b $battery -m:}$icon%{A}$SEPERATOR"
         elif [ "$isreach" = "false" ] && [ "$istrust" = "true" ]
         then
@@ -89,21 +100,17 @@ show_pmenu2 () {
 
 }
 get_icon () {
-    if [ "$2" = "tablet" ]
-    then
-        icon=$ICON_TABLET
-    else
-        icon=$ICON_SMARTPHONE
-    fi
+    initial="$(echo $2 | head -c 3)"
     case $1 in
-    "-1")     ICON="%{F$COLOR_DISCONNECTED}$icon%{F-}" ;;
-    "-2")     ICON="%{F$COLOR_NEWDEVICE}$icon%{F-}" ;;
-    9*|100)   ICON="%{F$COLOR_BATTERY_90_100}$icon%{F-}" ;;
-    7*|8*)    ICON="%{F$COLOR_BATTERY_70_80}$icon%{F-}" ;;
-    5*|6*)    ICON="%{F$COLOR_BATTERY_50_60}$icon%{F-}" ;;
-    3*|4*)    ICON="%{F$COLOR_BATTERY_30_40}$icon%{F-}" ;;
-    2*)       ICON="%{F$COLOR_BATTERY_20_30}$icon%{F-}" ;;
-    *)        ICON="%{F$COLOR_BATTERY_LOW}$icon%{F-}" ;;
+    "-1")     ICON="%{F$COLOR_DISCONNECTED}$ICON_DISCONECTED%{F-}" ;;
+    "-2")     ICON="%{F$COLOR_NEWDEVICE}$ICON_QUESTION%{F-}" ;;
+    100)      ICON="%{F$COLOR_BATTERY_100}$initial$ICON_100%{F-}" ;;
+    9*)       ICON="%{F$COLOR_BATTERY_90_99}$initial$ICON_90%{F-}" ;;
+    7*|8*)    ICON="%{F$COLOR_BATTERY_70_80}$initial$ICON_70%{F-}" ;;
+    5*|6*)    ICON="%{F$COLOR_BATTERY_50_60}$initial$ICON_50%{F-}" ;;
+    3*|4*)    ICON="%{F$COLOR_BATTERY_30_40}$initial$ICON_30%{F-}" ;;
+    2*)       ICON="%{F$COLOR_BATTERY_20_30}$initial$ICON_20%{F-}" ;;
+    *)        ICON="%{F$COLOR_BATTERY_LOW}$initial$ICON_LOW%{F-}" ;;
     esac
     echo $ICON
 }
