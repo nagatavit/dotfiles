@@ -102,7 +102,8 @@ show_pmenu2 () {
 get_icon () {
     initial="$(echo $2 | head -c 3)"
     case $1 in
-    "-1")     ICON="%{F$COLOR_DISCONNECTED}$ICON_DISCONECTED%{F-}" ;;
+    # "-1")     ICON="%{F$COLOR_DISCONNECTED}$ICON_DISCONECTED%{F-}" ;;
+    "-1")     ICON="" ;;
     "-2")     ICON="%{F$COLOR_NEWDEVICE}$ICON_QUESTION%{F-}" ;;
     100)      ICON="%{F$COLOR_BATTERY_100}$initial$ICON_100%{F-}" ;;
     9*)       ICON="%{F$COLOR_BATTERY_90_99}$initial$ICON_90%{F-}" ;;
@@ -115,6 +116,10 @@ get_icon () {
     echo $ICON
 }
 
+notify_bat () {
+    notify-send -t 900 "$DEV_NAME" "Battery: $DEV_BATTERY%"
+}
+
 unset DEV_ID DEV_NAME DEV_BATTERY
 while getopts 'di:n:b:mp' c
 do
@@ -124,7 +129,8 @@ do
         i) DEV_ID=$OPTARG ;;
         n) DEV_NAME=$OPTARG ;;
         b) DEV_BATTERY=$OPTARG ;;
-        m) show_menu  ;;
+        m) notify_bat  ;;
+        # m) show_menu  ;;
         p) show_pmenu ;;
     esac
 done
