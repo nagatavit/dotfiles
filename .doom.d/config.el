@@ -123,6 +123,17 @@
 (global-set-key (kbd "C-c x j") 'xref-find-references)
 (global-set-key (kbd "C-M-p") 'xref-pop-marker-stack)
 
+(global-set-key (kbd "<escape>") #'god-local-mode)
+
+(after! god-mode
+  (define-key god-local-mode-map (kbd "C-x C-1") #'delete-other-windows)
+  (define-key god-local-mode-map (kbd "C-x C-2") #'split-window-below)
+  (define-key god-local-mode-map (kbd "C-x C-3") #'split-window-right)
+  (define-key god-local-mode-map (kbd "C-x C-0") #'delete-window)
+  (define-key god-local-mode-map (kbd "i") #'god-local-mode)
+  (define-key god-local-mode-map (kbd "z") #'repeat)
+)
+
 (global-set-key (kbd "C-,") 'undo-fu-only-redo)
 
 (global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
@@ -225,6 +236,7 @@ Otherwise, call `backward-kill-word'."
       org-adapt-indentation nil
       org-archive-location (concat "archive/" "%s_archive::")
       org-log-into-drawer t
+      org-agenda-files '("~/Org/agenda/")
       )
 
 (use-package org-bullets
@@ -239,6 +251,98 @@ Otherwise, call `backward-kill-word'."
   (org-mode . org-fragtog-mode))
 
 (use-package org-download)
+
+(after! org
+  (setq org-todo-keywords
+        (quote ((sequence "☛ TODO(t)" "↻ REDO(r@)" "➥ IN PROGRESS(p!)" "|")
+                (sequence "⚑ WAITING(w@)" "➤ FORWARD(f@)" "◷ HOLD(h@)" "|")
+                (sequence "⚡ NEXT(n!)" "|" "✘ CANCELLED(c@)" "✔ DONE(d!)")))
+        )
+
+  (setq org-todo-keyword-faces
+        '(("☛ TODO" . "tomato")
+          ("↻ REDO" . "yellow")
+          ("⚡ NEXT" . "orange1")
+          ("➥ IN PROGRESS" . "deep sky blue")
+          ("◷ HOLD" . "NavajoWhite1")
+          ("⚑ WAITING" . "gray")
+          ("➤ FORWARD" . "gold3")
+          ("✘ CANCELLED" . "lawn green")
+          ("✔ DONE" . "green")))
+  )
+
+(customize-set-value
+    'org-agenda-category-icon-alist
+    `(
+      ;; ("chores" ,(list (all-the-icons-faicon "home" :face 'all-the-icons-lorange :v-adjust 0.01)) nil nil :ascent center)
+      ;; ("PIBIC" ,(list (all-the-icons-faicon "graduation-cap" :face 'all-the-icons-purple :v-adjust 0.01)) nil nil :ascent center)
+      ("PIBIC" "~/Org/icons/icon-16px.png" nil nil :ascent center)
+      ("chores" "~/Org/icons/004-time management.svg" nil nil :ascent center)
+      ("email" "~/Org/icons/043-email.svg" nil nil :ascent center)
+      ;; ("Work" "~/.dotfiles/icons/calendar.svg" nil nil :ascent center)
+      ;; ("todo" "~/.dotfiles/icons/checklist.svg" nil nil :ascent center)
+      ;; ("walk" "~/.dotfiles/icons/walk.svg" nil nil :ascent center)
+      ;; ("solution" "~/.dotfiles/icons/solution.svg" nil nil :ascent center)
+      ))
+
+(setq org-agenda-hidden-separator "‌‌ ")
+(defun agenda-color-char ()
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "⚡" nil t)
+      (put-text-property (match-beginning 0) (match-end 0)
+                         'face '(:height 300 :foreground "gold2" :bold t))))
+  )
+
+(setq org-agenda-block-separator (string-to-char " "))
+(setq org-agenda-format-date 'my-org-agenda-format-date-aligned)
+
+(defun my-org-agenda-format-date-aligned (date)
+  "Format a DATE string for display in the daily/weekly agenda, or timeline.
+This function makes sure that dates are aligned for easy reading."
+  (require 'cal-iso)
+  (let* ((dayname (calendar-day-name date 1 nil))
+         (day (cadr date))
+         (day-of-week (calendar-day-of-week date))
+         (month (car date))
+         (year (nth 2 date))
+         (monthname (calendar-month-name month nil))
+         (iso-week (org-days-to-iso-week
+                    (calendar-absolute-from-gregorian date)))
+         (weekyear (cond ((and (= month 1) (>= iso-week 52))
+                          (1- year))
+                         ((and (= month 12) (<= iso-week 1))
+                          (1+ year))
+                         (t year)))
+         (weekstring (if (= day-of-week 1)
+                         (format " W%02d" iso-week)
+                       "")))
+         (format " %-2s. %2d %s, %s"
+            dayname day monthname year)))
+
+(setq org-agenda-custom-commands
+      '(("o" "My Agenda"
+         ((todo "TODO" (
+                      (org-agenda-overriding-header "⚡ Do Today:\n")
+                      (org-agenda-remove-tags t)
+                      (org-agenda-prefix-format "  %-2i %-13b")
+                      (org-agenda-todo-keyword-format "")))
+          (agenda "" (
+                      (org-agenda-skip-scheduled-if-done t)
+                      (org-agenda-skip-timestamp-if-done t)
+                      (org-agenda-skip-deadline-if-done t)
+                      (org-agenda-start-day "+0d")
+                      (org-agenda-span 5)
+                      (org-agenda-overriding-header "⚡ Schedule:\n")
+                      (org-agenda-repeating-timestamp-show-all nil)
+                      (org-agenda-remove-tags t)
+                      (org-agenda-prefix-format "  %-3i  %-15b%t %s")
+                       ;; (concat "  %-3i  %-15b %t%s" org-agenda-hidden-separator))
+                      (org-agenda-todo-keyword-format " ☐ ")
+                      (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
+                      ;; (org-agenda-scheduled-leaders '("" ""))
+                      ;; (org-agenda-deadline-leaders '("" ""))
+                      (org-agenda-time-grid (quote ((daily today remove-match) (0900 1200 1800 2100) "      " "┈┈┈┈┈┈┈┈┈┈┈┈┈")))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; ORG ROAM
@@ -334,11 +438,12 @@ Otherwise, call `backward-kill-word'."
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 2)
   (setq company-dabbrev-downcase nil)
-  (setq company-show-numbers t))
+  (setq company-show-numbers t)
+  (push 'company-files company-backends))
 
 (use-package company-org-roam
   :config
-  (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
+  (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-files company-dabbrev)))
   ;; (push 'company-org-roam company-backends))
 
 (after! org-journal
