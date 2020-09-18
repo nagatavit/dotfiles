@@ -43,6 +43,10 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; disable solarie mode so I can set my background
+(after! solaire-mode
+  (solaire-global-mode -1))
+
 (when (display-graphic-p)
   (custom-set-faces
    '(highlight ((t (:background "orange" :foreground "black"))))
@@ -50,6 +54,7 @@
    ;; '(font-lock-comment-face ((t (:foreground "#9acd32"))))
    ;; '(default ((t (:inherit nil :stipple nil :background "#131417" :foreground "#f8f8f2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width extra-condensed :foundry "FBI " :family "Input Mono Compressed"))))
    '(show-paren-match ((t (:background "orange" :foreground "black" :weight extra-bold))))
+   '(default ((t (:background "#131417"))))
 
    ;; Org mode
    '(org-level-1 ((t (:inherit outline-1 :height 1.15))))
