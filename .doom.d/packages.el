@@ -70,3 +70,6 @@
   :recipe (:host github :repo "org-roam/org-roam-server"))
 (package! org-fragtog)
 (package! org-bullets)
+(package! org-super-agenda :pin "dd0d104c26")
+(package! doct
+  :recipe (:host github :repo "progfolio/doct"))

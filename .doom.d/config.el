@@ -43,6 +43,13 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; Use utf-8 as default coding system
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
 ;; disable solarie mode so I can set my background
 (after! solaire-mode
   (solaire-global-mode -1))
@@ -50,7 +57,7 @@
 (when (display-graphic-p)
   (custom-set-faces
    '(highlight ((t (:background "orange" :foreground "black"))))
-   ;; '(bold ((t (:foreground "orange" :weight bold))))
+   '(bold ((t (:foreground "orange" :weight bold))))
    ;; '(font-lock-comment-face ((t (:foreground "#9acd32"))))
    ;; '(default ((t (:inherit nil :stipple nil :background "#131417" :foreground "#f8f8f2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width extra-condensed :foundry "FBI " :family "Input Mono Compressed"))))
    '(show-paren-match ((t (:background "orange" :foreground "black" :weight extra-bold))))
@@ -69,7 +76,7 @@
    ;; '(org-agenda-date-weekend ((t (:inherit org-agenda-date :background "#97BC62" :foreground "NavyBlue"))))
    '(org-block-begin-line ((t (:foreground "#9acd32" :background "#3d4551"))))
    '(org-block-end-line ((t (:foreground "#9acd32" :background "#3d4551"))))
-   ;; '(org-verbatim ((t (:inherit shadow :foreground "DarkGoldenrod1" :box (:line-width 1 :color "grey75" :style pressed-button)))))
+   '(org-verbatim ((t (:inherit shadow :foreground "DarkGoldenrod1" :box (:line-width 1 :color "grey75" :style pressed-button)))))
    ;; '(org-roam-link ((t (:inherit org-link :foreground "dark orange"))))
    ;; '(org-list-dt ((t (:foreground "#105fff" :weight bold))))
    )
@@ -90,6 +97,14 @@
 
 (setq doom-modeline-height 5)
 
+;; Pretty way to show buffers with same name
+(require 'uniquify)
+
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-separator " • ")
+(setq uniquify-after-kill-buffer-p t)
+(setq uniquify-ignore-buffers-re "^\\*")
+
 ;; Removes *Completions* from buffer after you've opened a file.
 (add-hook 'minibuffer-exit-hook
           '(lambda ()
@@ -108,11 +123,11 @@
 
 (global-set-key (kbd "C-q") 'er/expand-region)
 
-(global-set-key (kbd "C-c c p") 'insert-parentheses)
 (global-set-key (kbd "C-c d") 'duplicate-line)
+(global-set-key (kbd "C-c c p") 'insert-parentheses)
 (global-set-key (kbd "C-c c r") 'replace-string)
 (global-set-key (kbd "C-c c R") 'query-replace)
-(global-set-key (kbd "C-c c ç") 'org-capture)
+(global-set-key (kbd "C-c c ç") '+org-capture/open-frame)
 
 (global-set-key (kbd "C-ç") 'other-window)
 (global-set-key (kbd "C-s") 'swiper)
@@ -123,7 +138,7 @@
 (global-set-key (kbd "M-s") 'avy-goto-char)
 (global-set-key "\C-x\C-m" 'compile)
 
-(global-set-key (kbd "C-c u") 'dumb-jump-go)
+(global-set-key (kbd "C-c x u") 'dumb-jump-go)
 (global-set-key (kbd "C-c x o") 'xref-find-definitions)
 (global-set-key (kbd "C-c x j") 'xref-find-references)
 (global-set-key (kbd "C-M-p") 'xref-pop-marker-stack)
@@ -139,7 +154,7 @@
   (define-key god-local-mode-map (kbd "z") #'repeat)
 )
 
-(global-set-key (kbd "C-,") 'undo-fu-only-redo)
+;; (global-set-key (kbd "C-,") 'undo-fu-only-redo)
 
 (global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
 (global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
@@ -242,6 +257,9 @@ Otherwise, call `backward-kill-word'."
       org-archive-location (concat "archive/" "%s_archive::")
       org-log-into-drawer t
       org-agenda-files '("~/Org/agenda/")
+      org-export-coding-system 'utf-8
+      org-use-sub-superscripts "{}"
+      org-startup-folded "fold"
       )
 
 (use-package org-bullets
@@ -348,6 +366,171 @@ This function makes sure that dates are aligned for easy reading."
                       ;; (org-agenda-scheduled-leaders '("" ""))
                       ;; (org-agenda-deadline-leaders '("" ""))
                       (org-agenda-time-grid (quote ((daily today remove-match) (0900 1200 1800 2100) "      " "┈┈┈┈┈┈┈┈┈┈┈┈┈")))))))))
+
+
+(use-package! doct
+  :commands (doct))
+
+(after! org-mode
+  (defvar +org-capture-todo-file "~/Org/agenda/refile.org")
+  (defvar +org-capture-central-project-todo-file "~/Org/agenda/project_todo.org")
+  (defvar +org-capture-central-project-notes-file "~/Org/agenda/project_notes.org")
+  (defvar +org-capture-central-project-changelog-file "~/Org/agenda/project_changelog.org")
+  )
+
+(defvar org-bucket-file-location "~/Common/Agenda/refile.org")
+(defvar org-journal-file-location "~/Common/Agenda/journal.org")
+(defvar org-uni-units-file-location "~/Common/Templates/.org/.uni-units")
+(defvar org-recipes-file-location "~/Common/Receitas/Receitas.org")
+
+;; Stolen from: https://tecosaur.github.io/emacs-config/config.html (lots of good stuff)
+;; Note: uni-units is a list of names separated by newlines
+(after! org-capture
+  (add-transient-hook! 'org-capture-select-template
+    (setq org-capture-templates
+          (doct `((,(format "%s\tPersonal todo" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
+                   :keys "t"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* TODO %?"
+                              "%i %a")
+                   )
+                  (,(format "%s\tPersonal note" (all-the-icons-faicon "sticky-note-o" :face 'all-the-icons-green :v-adjust 0.01))
+                   :keys "n"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* %?"
+                              "%i %a")
+                   )
+                  (,(format "%s\tUniversity" (all-the-icons-faicon "graduation-cap" :face 'all-the-icons-purple :v-adjust 0.01))
+                   :keys "u"
+                   :file +org-capture-todo-file
+                   :headline "University"
+                   :prepend t
+                   :type entry
+                   :children ((,(format "%s\tTest" (all-the-icons-material "timer" :face 'all-the-icons-red :v-adjust 0.01))
+                               :keys "t"
+                               :template ("* TODO [#C] %? :uni:tests:"
+                                          "SCHEDULED: %^{Test date:}T"
+                                          "%i %a"))
+                              (,(format "%s\tAssignment" (all-the-icons-material "library_books" :face 'all-the-icons-orange :v-adjust 0.01))
+                               :keys "a"
+                               :template ("* TODO [#B] %? :uni:assignments:"
+                                          "DEADLINE: %^{Due date:}T"
+                                          "%i %a"))
+                              (,(format "%s\tMiscellaneous task" (all-the-icons-faicon "list" :face 'all-the-icons-yellow :v-adjust 0.01))
+                               :keys "u"
+                               :template ("* TODO [#C] %? :uni:"
+                                          "%i %a"))))
+                  (,(format "%s\tEmail" (all-the-icons-faicon "envelope" :face 'all-the-icons-blue :v-adjust 0.01))
+                   :keys "e"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* TODO %? :email:"
+                              "%i %a"))
+                  (,(format "%s\tInteresting" (all-the-icons-faicon "eye" :face 'all-the-icons-lcyan :v-adjust 0.01))
+                   :keys "i"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Interesting"
+                   :type entry
+                   :template ("* [ ] %{desc}%? :%{i-type}:"
+                              "%i %a")
+                   :children ((,(format "%s\tWebpage" (all-the-icons-faicon "globe" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "w"
+                               :desc "%(org-cliplink-capture) "
+                               :i-type "read:web"
+                               )
+                              (,(format "%s\tArticle" (all-the-icons-octicon "file-text" :face 'all-the-icons-yellow :v-adjust 0.01))
+                               :keys "a"
+                               :desc ""
+                               :i-type "read:reaserch"
+                               )
+                              (,(format "%s\tInformation" (all-the-icons-faicon "info-circle" :face 'all-the-icons-blue :v-adjust 0.01))
+                               :keys "i"
+                               :desc ""
+                               :i-type "read:info"
+                               )
+                              (,(format "%s\tIdea" (all-the-icons-material "bubble_chart" :face 'all-the-icons-silver :v-adjust 0.01))
+                               :keys "I"
+                               :desc ""
+                               :i-type "idea"
+                               )))
+                  (,(format "%s\tTasks" (all-the-icons-octicon "inbox" :face 'all-the-icons-yellow :v-adjust 0.01))
+                   :keys "k"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Tasks"
+                   :type entry
+                   :template ("* TODO %? %^G%{extra}"
+                              "%i")
+                   :children ((,(format "%s\tGeneral Task" (all-the-icons-octicon "inbox" :face 'all-the-icons-yellow :v-adjust 0.01))
+                               :keys "k"
+                               :extra ""
+                               )
+                              (,(format "%s\tTask with deadline" (all-the-icons-material "timer" :face 'all-the-icons-orange :v-adjust -0.1))
+                               :keys "d"
+                               :extra "\nDEADLINE: %^{Deadline:}t"
+                               )
+                              (,(format "%s\tScheduled Task" (all-the-icons-octicon "calendar" :face 'all-the-icons-orange :v-adjust 0.01))
+                               :keys "s"
+                               :extra "\nSCHEDULED: %^{Start time:}t"
+                               )
+                              ))
+                  (,(format "%s\tProject" (all-the-icons-octicon "repo" :face 'all-the-icons-silver :v-adjust 0.01))
+                   :keys "p"
+                   :prepend t
+                   :type entry
+                   :headline "Inbox"
+                   :template ("* %{time-or-todo} %?"
+                              "%i"
+                              "%a")
+                   :file ""
+                   :custom (:time-or-todo "")
+                   :children ((,(format "%s\tProject-local todo" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "t"
+                               :time-or-todo "TODO"
+                               :file +org-capture-project-todo-file)
+                              (,(format "%s\tProject-local note" (all-the-icons-faicon "sticky-note" :face 'all-the-icons-yellow :v-adjust 0.01))
+                               :keys "n"
+                               :time-or-todo "%U"
+                               :file +org-capture-project-notes-file)
+                              (,(format "%s\tProject-local changelog" (all-the-icons-faicon "list" :face 'all-the-icons-blue :v-adjust 0.01))
+                               :keys "c"
+                               :time-or-todo "%U"
+                               :heading "Unreleased"
+                               :file +org-capture-project-changelog-file))
+                   )
+                  ("\tCenteralised project templates"
+                   :keys "o"
+                   :type entry
+                   :prepend t
+                   :template ("* %{time-or-todo} %?"
+                              "%i"
+                              "%a")
+                   :children (("Project todo"
+                               :keys "t"
+                               :prepend nil
+                               :time-or-todo "TODO"
+                               :heading "Tasks"
+                               :file +org-capture-central-project-todo-file)
+                              ("Project note"
+                               :keys "n"
+                               :time-or-todo "%U"
+                               :heading "Notes"
+                               :file +org-capture-central-project-notes-file)
+                              ("Project changelog"
+                               :keys "c"
+                               :time-or-todo "%U"
+                               :heading "Unreleased"
+                               :file +org-capture-central-project-changelog-file))
+                   ))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; ORG ROAM
