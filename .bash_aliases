@@ -9,3 +9,5 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias r='ranger'
 
 alias e='emacsclient'
+
+alias no='grep -viP'

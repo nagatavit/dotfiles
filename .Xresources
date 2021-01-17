@@ -1,5 +1,6 @@
 ! Transparency (0-1):
 St.alpha: 0.9
+!St.alpha: 1
 
 ! Dracula color scheme
 St.foreground: #F8F8F2
@@ -23,6 +24,27 @@ St.color15:    #FFB86C
 
 St.font: monospace:size=11
 
+! Dracula color scheme
+URxvt.foreground: #F8F8F2
+! URxvt.background: [90]#282A36
+URxvt.background: #282A36
+URxvt.color0:     #262626
+URxvt.color1:     #E356A7
+URxvt.color2:     #42E66C
+URxvt.color3:     #E4F35A
+URxvt.color4:     #9B6BDF
+URxvt.color5:     #E64747
+URxvt.color6:     #75D7EC
+URxvt.color7:     #EFA554
+URxvt.color8:     #7A7A7A
+URxvt.color9:     #FF79C6
+URxvt.color10:    #50FA7B
+URxvt.color11:    #F1FA8C
+URxvt.color12:    #BD93F9
+URxvt.color13:    #FF5555
+URxvt.color14:    #8BE9FD
+URxvt.color15:    #FFB86C
+
 URxvt.intensityStyles:	false
 URxvt.depth:		32
 URxvt.font: 		xft:FiraCode:size=11, xft:MesloLGS NF:size=11:style=Bold, xft:PowerlineSymbols
@@ -30,7 +52,7 @@ URxvt.scrollBar:	false
 URxvt.cursorColor:	white
 
 !! Extensions
-URxvt.perl-ext-common:  default,matcher,resize-font,url-select,keyboard-select,tabbedex,fullscreen
+URxvt.perl-ext-common:  default,matcher,resize-font,url-select,keyboard-select,tabbedex,fullscreen,selection-to-clipboard,clipboard
 URxvt.colorUL:              #4682B4
 !! Fullscreen
 URxvt.keysym.F11: perl:fullscreen:switch
@@ -50,3 +72,33 @@ URxvt.iso14755_52: false
 !! Matcher
 URxvt.url-launcher: linkhandler
 URxvt.matcher.button:   1
+!! Copy and paste
+URxvt.keysym.M-C: eval:selection-to-clipboard
+URxvt.keysym.M-V: eval:paste_clipboard
+
+! *.foreground:   #C0C0C0
+! *.background:   #101010
+! ! black/dark-gray
+! *.color0:       #101010
+! *.color8:       #454545
+! ! red/orange
+! *.color1:       #EFA6A2
+! *.color9:       #E0AF85
+! ! green/aquamarine
+! *.color2:       #80C990
+! *.color10:      #5ACCAF
+! ! amber/yellow
+! *.color3:       #A69460
+! *.color11:      #C8C874
+! ! blue/violet
+! *.color4:       #A3B8EF
+! *.color12:      #CCACED
+! ! magenta/rose
+! *.color5:       #E6A3DC
+! *.color13:      #F2A1C2
+! ! cyan/azure
+! *.color6:       #50CACD
+! *.color14:      #74C3E4
+! ! gray/white
+! *.color7:       #808080
+! *.color15:      #C0C0C0
