@@ -14,6 +14,8 @@ font pango:System San Franciso Display 8
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 # exec --no-startup-id nm-applet
 
+mouse_warping none
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -44,6 +46,9 @@ bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
+
+bindsym --release $mod+t focus left; exec --no-startup-id xdotool key alt+m
+bindsym --release $mod+m exec --no-startup-id /home/nagata/.bin/swap-and-mute.sh
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -116,6 +121,10 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 set $left_monitor "HDMI-1"
 set $right_monitor "eDP-1"
 
+exec_always xrandr --output eDP-1 --primary --mode 1366x768 --pos 1920x312 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal
+# exec_always xrandr --output eDP-1 --primary --mode 1366x768 --pos 0x312 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 1366x0 --rotate normal
+# exec_always xrandr --output eDP-1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 1366x0 --rotate normal
+
 # use workspaces on different monitors
 workspace $ws1 output $left_monitor
 workspace $ws2 output $left_monitor
@@ -129,7 +138,7 @@ workspace $ws9 output $right_monitor
 workspace $ws10 output $right_monitor
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+# bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -168,9 +177,10 @@ bindsym XF86MonBrightnessUp exec light -A 5;
 bindsym XF86MonBrightnessDown exec light -U 5;
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks | awk '/* index:/{print $3}') +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks | awk '/* index:/{print $3}') -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pacmd list-sinks | awk '/* index:/{print $3}') toggle # mute sound
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -180,7 +190,10 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # spacing and gaps
 for_window [class="^.*"] border pixel 5
-gaps inner 10
+gaps inner 0
+
+# smart_borders on
+# smart_gaps on
 
 # Customize colors
 client.focused          #16a085 #16a085 #eeeeee #16a085 #16a085
@@ -193,46 +206,52 @@ client.placeholder      #222b2e #222b2e #eeeeee #222b2e #222b2e
 #### Workspace Specific Applications ####
 #########################################
 
+# LEGACY
 # ws1
 # ws2
-assign [class="Emacs"] $ws2
 # ws3
 # ws4
+assign [class="fluent-reader"] $ws4
+assign [class="Anki"] $ws4
 # ws5
 # ws6
 # ws7
-assign [class="discord"] $ws7
-assign [class="Anki"] $ws7
-for_window [class="Spotify"] move to workspace $ws7
+# for_window [class="Spotify"] move to workspace $ws7
 # ws8
 # ws9
-
+assign [class="Zotero"] $ws9
+# assign [class="Emacs"] $ws9
 # ws10
 assign [class="Thunderbird"] $ws10
+
+exec --no-startup-id "i3-msg 'workspace 2; append_layout /home/nagata/.config/i3/layouts/workspace09.json'"
 
 ##############################
 #### Startup applications ####
 ##############################
 
 exec picom
-exec_always xrandr --output eDP-1 --primary --mode 1366x768 --pos 1920x312 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal
-# exec_always xrandr --output eDP-1 --primary --mode 1366x768 --pos 0x312 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 1366x0 --rotate normal
 exec_always ~/.config/polybar/launch.sh
-# exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpaper/rhines_lab.jpg
-exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpaper/exusiai_mostima.jpg
+exec_always --no-startup-id feh --bg-scale /home/nagata/Common/Backup/Pictures/Wallpapers/Desk/korone.png
 
 exec firefox
+exec chromium
 exec emacs
+exec fluent-reader
 exec thunderbird
 exec syncthing
+exec anki
+exec zotero
+# in case I ever forget this again...
+# this is for the japanese input
+exec fcitx
 
 exec --no-startup-id keepassxc
-exec --no-startup-id emacs -name "scratchpad"
-# exec --no-startup-id emacs --daemon
+exec --no-startup-id st -n "scratchpad" -e vim $(mktemp)
 exec --no-startup-id st -n "dropdown"
 
 exec_always xmodmap ~/.Xmodmap
-exec_always xset r rate 200 70
+exec_always xset r rate 200 100
 exec kdeconnect-indicator
 exec --no-startup-id dunst > /dev/null 2>&1 &
 
@@ -240,12 +259,16 @@ exec --no-startup-id dunst > /dev/null 2>&1 &
 #### Window configurations ####
 ###############################
 
+for_window [title="doom-capture"] floating enable
+for_window [title="doom-capture"] resize set 1200 700
+for_window [title="doom-capture"] move position center
+
 # for_window [class="dolphin"] floating enable
 # for_window [class="dolphin"] resize set 1200 700
 # for_window [class="dolphin"] move position center
 
-for_window [class="Pavucontrol"] floating enable
-for_window [class="Pavucontrol"] resize set 1200 700
+# for_window [class="Pavucontrol"] floating enable
+# for_window [class="Pavucontrol"] resize set 1200 700
 
 for_window [class="KeePassXC"] floating enable
 for_window [class="KeePassXC"] resize set 1200 700
@@ -266,12 +289,16 @@ bindsym $mod+o [instance="dropdown"] scratchpad show; [instance="dropdown"] move
 #### Custom keybindings ####
 ############################
 
-bindsym $mod+n exec dolphin
-bindsym $mod+c exec gsimplecal
+bindsym $mod+Shift+n exec dolphin
+bindsym $mod+Shift+c exec gsimplecal
+bindsym $mod+c exec rofi -show calc -modi calc -no-show-match -no-sort
 bindsym $mod+p move workspace to output right
 bindsym Print exec scrot ~/Pictures/Screenshots/%Y-%m-%d_%H:%M:%S.png
-bindsym --release $mod+Print exec scrot -s ~/Pictures/Screenshots/%Y-%m-%d_%H:%M:%S.png
+bindsym --release $mod+Print exec gnome-screenshot -i
+# bindsym $mod+Shift+p gaps right current set 0
 
 bindsym $mod+Shift+b border pixel 3
 bindsym $mod+b border normal
 
+# put esc on caps to use vim
+# exec_always setxkbmap -option caps:escape
