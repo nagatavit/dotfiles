@@ -28,7 +28,7 @@ ICON_50=''
 ICON_30=''
 ICON_20=''
 ICON_LOW=''
-ICON_QUESTION=''
+# ICON_QUESTION=''
 ICON_DISCONECTED=''
 
 ICON_SMARTPHONE=''
@@ -48,7 +48,7 @@ show_devices (){
         istrust="$(qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$deviceid" org.kde.kdeconnect.device.isTrusted)"
         if [ "$isreach" = "true" ] && [ "$istrust" = "true" ]
         then
-            battery="$(qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$deviceid" org.kde.kdeconnect.device.battery.charge)"
+            battery="$(qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$deviceid/battery" org.kde.kdeconnect.device.battery.charge)"
             icon=$(get_icon "$battery" "$devicename")
             devices+="%{A1:$DIR/polybar-kdeconnect.sh -n '$devicename' -i $deviceid -b $battery -m:}$icon%{A}$SEPERATOR"
         elif [ "$isreach" = "false" ] && [ "$istrust" = "true" ]
@@ -103,15 +103,15 @@ get_icon () {
     initial="$(echo $2 | head -c 3)"
     case $1 in
     # "-1")     ICON="%{F$COLOR_DISCONNECTED}$ICON_DISCONECTED%{F-}" ;;
-    "-1")     ICON="" ;;
-    "-2")     ICON="%{F$COLOR_NEWDEVICE}$ICON_QUESTION%{F-}" ;;
-    100)      ICON="%{F$COLOR_BATTERY_100}$initial$ICON_100%{F-}" ;;
-    9*)       ICON="%{F$COLOR_BATTERY_90_99}$initial$ICON_90%{F-}" ;;
-    7*|8*)    ICON="%{F$COLOR_BATTERY_70_80}$initial$ICON_70%{F-}" ;;
-    5*|6*)    ICON="%{F$COLOR_BATTERY_50_60}$initial$ICON_50%{F-}" ;;
-    3*|4*)    ICON="%{F$COLOR_BATTERY_30_40}$initial$ICON_30%{F-}" ;;
-    2*)       ICON="%{F$COLOR_BATTERY_20_30}$initial$ICON_20%{F-}" ;;
-    *)        ICON="%{F$COLOR_BATTERY_LOW}$initial$ICON_LOW%{F-}" ;;
+    "-1" | "-2" )     ICON="" ;;
+    # "-2")     ICON="%{F$COLOR_NEWDEVICE}$ICON_QUESTION%{F-}" ;;
+    100)      ICON="%{F$COLOR_BATTERY_100}$initial$ICON_90$1%%{F-}" ;;
+    9*)       ICON="%{F$COLOR_BATTERY_90_99}$initial$ICON_90$1%%{F-}" ;;
+    7*|8*)    ICON="%{F$COLOR_BATTERY_70_80}$initial$ICON_70$1%%{F-}" ;;
+    5*|6*)    ICON="%{F$COLOR_BATTERY_50_60}$initial$ICON_50$1%%{F-}" ;;
+    3*|4*)    ICON="%{F$COLOR_BATTERY_30_40}$initial$ICON_30$1%%{F-}" ;;
+    2*)       ICON="%{F$COLOR_BATTERY_20_30}$initial$ICON_20$1%%{F-}" ;;
+    *)        ICON="%{F$COLOR_BATTERY_LOW}$initial$ICON_LOW$1%%{F-}" ;;
     esac
     echo $ICON
 }
