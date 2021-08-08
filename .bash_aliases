@@ -8,6 +8,8 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 alias r='ranger'
 
-alias e='emacsclient'
+alias e='emacsclient -c'
 
 alias no='grep -viP'
+
+alias scratch="vim $(mktemp)"
