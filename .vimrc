@@ -5,7 +5,7 @@ hi Search ctermfg=Black
 set number
 set tabstop=4
 set autoindent
-imap <Tab> <C-X><C-F>
+"imap <Tab> <C-X><C-F>
 set is
 set ic
 syntax on
