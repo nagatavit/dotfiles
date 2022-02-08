@@ -1,12 +1,13 @@
 configuration {
-    theme:              "config";
     show-icons:         false;
-    font:               "Font Awesome 30";
+    font:               "Font Awesome 6 Free";
 }
+
+@theme "config"
 
 mainbox {
     children:           [message, listview];
-    padding:            30% 37%;
+    padding:            30% 40%;
 }
 
 textbox {
@@ -28,5 +29,5 @@ listview {
 
 element-text {
     horizontal-align:   0.5;
-    font:               "Fira Coda 10";
+    font:               "Fira Code 20";
 }
