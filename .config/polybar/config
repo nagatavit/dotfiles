@@ -47,7 +47,7 @@ module-margin-right = 0
 
 ; Font
 font-0 = Fira Code:style=Bold:size=10;3
-font-1 = Font Awesome 5 Free Solid:size=11;3
+font-1 = Font Awesome 6 Free Solid:size=11;3
 
 ; Modules
 modules-left   = i3
