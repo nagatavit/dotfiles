@@ -51,7 +51,7 @@ font-1 = Font Awesome 6 Free Solid:size=11;3
 
 ; Modules
 modules-left   = i3
-modules-center = date time kdeconnect
+modules-center = date time #kdeconnect
 modules-right  = wired-network wireless-network battery light pavolume lock reboot poweroff
 
 ; Cursor actions
