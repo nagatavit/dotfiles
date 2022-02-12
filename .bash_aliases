@@ -4,7 +4,7 @@ alias fc='fc -e vim'
 
 alias unzip_fold='for f in *.zip; do unzip -d "${f%*.zip}" "$f"; done'
 
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias config='/usr/bin/git --git-dir=$HOME/.git/ --work-tree=$HOME'
 
 alias r='ranger'
 
