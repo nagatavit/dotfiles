@@ -244,7 +244,8 @@ exec zotero
 exec fcitx
 
 exec --no-startup-id keepassxc
-exec --no-startup-id st -n "scratchpad" -e vim $(mktemp)
+exec --no-startup-id discord
+# exec --no-startup-id st -n "scratchpad" -e vim $(mktemp)
 exec --no-startup-id st -n "dropdown"
 
 exec_always xmodmap ~/.Xmodmap
@@ -272,10 +273,10 @@ for_window [class="KeePassXC"] resize set 1200 700
 for_window [class="KeePassXC"] move scratchpad
 bindsym $mod+i [class="KeePassXC"] scratchpad show; [class="KeePassXC"] move position center
 
-for_window [instance="scratchpad"] floating enable
-for_window [instance="scratchpad"] resize set 1200 700
-for_window [instance="scratchpad"] move scratchpad
-bindsym $mod+u [instance="scratchpad"] scratchpad show; [instance="scratchpad"] move position center
+for_window [class="discord"] floating enable
+for_window [class="discord"] resize set 1200 700
+for_window [class="discord"] move scratchpad
+bindsym $mod+u [class="discord"] scratchpad show; [class="discord"] move position center
 
 for_window [instance="dropdown"] floating enable
 for_window [instance="dropdown"] resize set 1200 700
