@@ -219,7 +219,7 @@ assign [class="Anki"] $ws4
 assign [class="Zotero"] $ws9
 # assign [class="Emacs"] $ws9
 # ws10
-assign [class="Thunderbird"] $ws10
+assign [class="thunderbird"] $ws10
 
 exec --no-startup-id "i3-msg 'workspace 2; append_layout /home/nagata/.config/i3/layouts/workspace09.json'"
 
