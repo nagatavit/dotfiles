@@ -1,0 +1,29 @@
+[alias]
+    st = status
+    ci = commit
+    cia = commit -a
+    br = branch
+    co = checkout
+    df = diff
+    dfw = diff --color-words
+    cp = cherry-pick
+    lg = log -p
+    vtree = log --oneline --decorate --all --graph
+    who = shortlog -s --
+    un = log HEAD --not --remotes
+    pb = push -u origin HEAD
+    rp = remote prune origin
+    ft = fetch --all
+[core]
+    editor = vim
+[push]
+    default = simple
+[merge]
+    conflictStyle = diff3
+    tool = meld
+[pull]
+    rebase = true
+[rebase]
+    autoStash = true
+[fetch]
+    prune = true
