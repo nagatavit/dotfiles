@@ -16,6 +16,7 @@
     ft = fetch --all
 [core]
     editor = vim
+    pager = less -S
 [push]
     default = simple
 [merge]
