@@ -1,3 +1,5 @@
+Xft.dpi: 120
+
 ! Transparency (0-1):
 St.alpha: 0.9
 !St.alpha: 1
