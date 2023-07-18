@@ -250,6 +250,7 @@ exec --no-startup-id st -n "dropdown"
 
 exec_always xmodmap ~/.Xmodmap
 exec_always xset r rate 200 100
+exec_always xset m 26/10 4
 exec kdeconnect-indicator
 exec --no-startup-id dunst > /dev/null 2>&1 &
 
