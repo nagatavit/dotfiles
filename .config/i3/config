@@ -284,6 +284,8 @@ for_window [instance="dropdown"] resize set 1200 700
 for_window [instance="dropdown"] move scratchpad
 bindsym $mod+o [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 
+for_window [class="Gnome-screenshot"] floating enable
+
 ############################
 #### Custom keybindings ####
 ############################
