@@ -216,6 +216,7 @@ assign [class="Anki"] $ws4
 # ws7
 # for_window [class="Spotify"] move to workspace $ws7
 # ws8
+assign [class="Chromium"] $ws8
 # ws9
 assign [class="Zotero"] $ws9
 # assign [class="Emacs"] $ws9
