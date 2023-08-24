@@ -215,6 +215,7 @@ assign [class="Anki"] $ws4
 # ws7
 # for_window [class="Spotify"] move to workspace $ws7
 # ws8
+assign [class="Chromium"] $ws8
 # ws9
 assign [class="Zotero"] $ws9
 # assign [class="Emacs"] $ws9
@@ -229,7 +230,7 @@ exec --no-startup-id "i3-msg 'workspace 2; append_layout /home/nagata/.config/i3
 
 exec picom
 exec_always ~/.config/polybar/launch.sh
-exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpapers/Desk/suisei_min.png
+exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpapers/suisei-sky.jpeg
 
 exec firefox
 exec chromium
