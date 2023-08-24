@@ -242,6 +242,8 @@ exec zotero
 # in case I ever forget this again...
 # this is for the japanese input
 exec fcitx
+# three finger swipe to change workspaces
+exec --no-startup-id libinput-gestures-setup start
 
 exec --no-startup-id keepassxc
 exec --no-startup-id discord
