@@ -295,6 +295,8 @@ bindsym Print exec scrot ~/Pictures/Screenshots/%Y-%m-%d_%H:%M:%S.png
 bindsym --release $mod+Print exec gnome-screenshot -i
 # bindsym $mod+Shift+p gaps right current set 0
 
+bindsym $mod+t sticky enable
+
 bindsym $mod+Shift+b border pixel 3
 bindsym $mod+b border normal
 
