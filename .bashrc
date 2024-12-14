@@ -3,7 +3,7 @@
 
 alias ls='ls --color=auto'
 
-export PS1="[\[\033[38;5;10m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\] @ \[$(tput sgr0)\]\[\033[38;5;39m\]\W\[$(tput sgr0)\]] "
+export PS1="[\[\033[38;5;10m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\[$(tput sgr0)\]\[\033[38;5;39m\]\W\[$(tput sgr0)\]] "
 
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
