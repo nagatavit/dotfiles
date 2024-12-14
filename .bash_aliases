@@ -13,3 +13,8 @@ alias e='emacsclient -c'
 alias no='grep -viP'
 
 alias scratch="vim $(mktemp)"
+
+to-clipboard() {
+	xclip -sel c
+	echo "copied to clipboard"
+}
