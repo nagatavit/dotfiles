@@ -230,7 +230,8 @@ exec --no-startup-id "i3-msg 'workspace 2; append_layout /home/nagata/.config/i3
 
 exec picom
 exec_always ~/.config/polybar/launch.sh
-exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpapers/Desk/suisei_min.png
+# exec_always --no-startup-id feh --bg-scale /home/nagata/Pictures/Wallpapers/Desk/suisei_min.png
+exec_always nitrogen --restore
 
 exec firefox
 exec chromium
