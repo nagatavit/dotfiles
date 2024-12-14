@@ -15,6 +15,10 @@ alias no='grep -viP'
 alias scratch="vim $(mktemp)"
 
 to-clipboard() {
-	xclip -sel c
-	echo "copied to clipboard"
+    xclip -sel c
+    echo "copied to clipboard"
+}
+
+ppgrep() {
+    pgrep "$@" | xargs --no-run-if-empty ps fp;
 }
