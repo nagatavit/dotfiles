@@ -1,0 +1,7 @@
+# Ignore everything under ~/.claude by default...
+/*
+
+# ...then allow only the files that are safe to commit (no secrets/transcripts).
+!.gitignore
+!settings.json
+!statusline-command.sh
